@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Procesando...</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ================= LOADER ================= */
+
+        .loader-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .spinner {
+            width: 70px;
+            height: 70px;
+            border: 8px solid #ddd;
+            border-top: 8px solid #3a7bd5;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 18px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ================= RESULTADO ================= */
+
+        .resultado {
+            display: none;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 32px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            color: #1f3a5f;
+            margin-bottom: 20px;
+            border-left: 5px solid #3a7bd5;
+            padding-left: 15px;
+        }
+
+        .feedback-box {
+            background-color: #f8fafc;
+            border: 1px solid #e1e6ef;
+            border-radius: 8px;
+            padding: 20px 24px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+            white-space: pre-wrap;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 13px;
+            color: #777;
+            text-align: right;
+        }
+
+        .student-info {
+            margin-bottom: 18px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= LOADER ================= -->
+<div class="loader-wrapper" id="loader">
+    <div class="spinner"></div>
+    <h3>Generando retroalimentación...</h3>
+    <p>Por favor espere ⏳</p>
+</div>
+
+<!-- ================= RESULTADO ================= -->
+<div class="resultado" id="resultado">
+
+    <div class="container">
+        <h2>Retroalimentación personalizada</h2>
+
+        <div class="student-info">
+            <strong>Nombre Estudiante:</strong> {{ nombre_estudiante }}
+        </div>
+
+        <div class="feedback-box" id="texto_resultado"></div>
+
+        <footer>
+            Generado con apoyo de Inteligencia Artificial
+        </footer>
+    </div>
+
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+
+    fetch(`/generar?${params.toString()}`)
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("resultado").style.display = "block";
+            document.getElementById("texto_resultado").innerText = data;
+        });
+</script>
+
+</body>
+</html>

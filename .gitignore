@@ -1,0 +1,38 @@
+# Entornos virtuales
+venv/
+env/
+.venv/
+
+# Archivos Python compilados
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Variables de entorno
+.env
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.bak
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Configuraciones de VSCode
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Archivos de salida
+output/
+dist/
+build/
+
+# PDF generados
+*.pdf

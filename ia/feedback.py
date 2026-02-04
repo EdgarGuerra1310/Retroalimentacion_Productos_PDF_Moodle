@@ -1,5 +1,7 @@
 import os
 from openai import OpenAI
+from db import obtener_transcripcion_entrega
+from ia.validaciones import SECUENCIA_ENTREGAS
 
 from dotenv import load_dotenv
 
@@ -36,19 +38,55 @@ def cargar_rubrica(course_id, cmid):
 # ======================
 # FUNCIÓN PRINCIPAL
 # ======================
-def generar_retroalimentacion(transcripcion, course_id, cmid):
+def generar_retroalimentacion(transcripcion, course_id, cmid, user_id=None):
     prompt_maestro = leer_archivo(PROMPT_PATH)
     rubrica = cargar_rubrica(course_id, cmid)
 
+
+    # ======================
+    # CONTEXTO DE SEGUNDA ENTREGA
+    # ======================
+    contexto_mejora = ""
+
+    curso = SECUENCIA_ENTREGAS.get(course_id)
+    if curso and user_id:
+        cmid_anterior = curso.get(cmid)
+
+        if cmid_anterior:
+            transcripcion_anterior = obtener_transcripcion_entrega(
+                user_id=user_id,
+                course_id=course_id,
+                cmid=cmid_anterior
+            )
+
+            if transcripcion_anterior:
+                contexto_mejora = f"""
+    --- CONTEXTO DE SEGUNDA ENTREGA ---
+
+    El siguiente trabajo corresponde a una SEGUNDA ENTREGA del estudiante.
+
+    A continuación se presenta el texto de la PRIMERA ENTREGA para que puedas
+    identificar y destacar las mejoras realizadas, los avances logrados y los
+    aspectos que aún requieren fortalecimiento.
+
+    --- PRIMERA ENTREGA ---
+    {transcripcion_anterior}
+
+    --- FIN PRIMERA ENTREGA ---
+    """
+
+
     prompt_final = f"""
-{prompt_maestro}
+    {prompt_maestro}
 
---- RÚBRICA ---
-{rubrica}
+    {contexto_mejora}
 
---- TRANSCRIPCIÓN DEL ESTUDIANTE ---
-{transcripcion}
-"""
+    --- RÚBRICA ---
+    {rubrica}
+
+    --- TRANSCRIPCIÓN DEL ESTUDIANTE ---
+    {transcripcion}
+    """
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",

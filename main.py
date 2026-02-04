@@ -5,11 +5,19 @@ from downloader import descargar_archivos_submissions
 from transcriber import transcribir_pdf
 from dotenv import load_dotenv
 from ia.feedback import generar_retroalimentacion
+from ia.validaciones import validar_pertinencia_pedagogica
+from ia.validaciones import (
+    validar_pertinencia_pedagogica,
+    validar_mejora_producto
+)
+
 from db import (
     crear_tabla_si_no_existe,
     guardar_retroalimentacion,
     obtener_retroalimentacion_existente
 )
+
+
 
 crear_tabla_si_no_existe()
 
@@ -72,7 +80,7 @@ def generar():
     )
 
     if not pdfs:
-        return "El usuario no tiene archivos"
+        return "He notado que aún no se ha cargado el producto solicitado para esta actividad. Esta tarea forma parte del proceso formativo y está diseñada para acompañarte en la reflexión y planificación de tu práctica pedagógica. Para poder continuar y ofrecerte una orientación formativa pertinente, es necesario que subas el producto solicitado, según la consigna. Te invito a revisar nuevamente la actividad y cargar tu trabajo cuando lo tengas listo. Estoy aquí para acompañarte en ese proceso."
 
     # 🔍 Verificar BD
     existente = obtener_retroalimentacion_existente(
@@ -99,10 +107,35 @@ def generar():
 
     transcripcion_final = "\n\n".join(textos)
 
+    # 1️⃣ Validación pedagógica (nivel + tipo)
+    validacion = validar_pertinencia_pedagogica(
+        texto=transcripcion_final,
+        course_id=course_id,
+        cmid=cmid
+    )
+
+    if not validacion["es_valido"]:
+        return validacion["mensaje"]
+
+    # 2️⃣ Validación de mejora (solo segundas entregas)
+    mejora = validar_mejora_producto(
+        texto_actual=transcripcion_final,
+        user_id=user_id,
+        course_id=course_id,
+        cmid=cmid
+    )
+    if not mejora["es_valido"]:
+        return mejora["mensaje"]
+
+    # 3️⃣ RECIÉN retroalimentar
+
+    # ✅ SOLO SI PASA, RETROALIMENTA
+
     resultado = generar_retroalimentacion(
         transcripcion=transcripcion_final,
         course_id=course_id,
-        cmid=cmid
+        cmid=cmid,
+        user_id=user_id
     )
 
     guardar_retroalimentacion({

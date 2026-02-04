@@ -2,6 +2,7 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 def get_db_connection():
@@ -97,6 +98,34 @@ def obtener_retroalimentacion_existente(user_id, course_id, cmid, assignid):
         ORDER BY fecha DESC
         LIMIT 1
     """, (user_id, course_id, cmid, assignid))
+
+    row = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    if row:
+        return row[0]
+
+    return None
+
+def obtener_transcripcion_entrega(
+    user_id,
+    course_id,
+    cmid
+):
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT transcripcion
+        FROM ia_retroalimentaciones_tareas
+        WHERE user_id = %s
+          AND course_id = %s
+          AND cmid = %s
+        ORDER BY fecha DESC
+        LIMIT 1
+    """, (user_id, course_id, cmid))
 
     row = cur.fetchone()
 

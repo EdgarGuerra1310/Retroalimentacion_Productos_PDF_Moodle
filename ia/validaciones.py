@@ -34,13 +34,17 @@ NIVELES_POR_CURSO = {
         "palabras_clave_validas": [
             "niños", "niñas", "juego", "exploración",
             "psicomotricidad", "lenguaje oral",
-            "rutinas", "aprendizaje a través del juego"
+            "rutinas", "aprendizaje a través del juego","infancia",
+            "primera infancia", "bienestar infantil", "aprendizaje lúdico", "expresión de emociones"
         ],
+ 
 
         "indicadores_prohibidos": [
-            "matemática","primaria"
+            "matemática","primaria",
             "secundaria", "bachillerato",
-            "3°", "4°", "5°" 
+            "3°", "4°", "5°",
+            "educación superior","primer grado","segundo grado","tercer grado",
+            "cuarto grado","quinto grado","sexto grado","1°","2°","asignatura","clase magistral"
         ],
 
         # 🔥 CLAVE: tipo de producto por cmid
@@ -152,10 +156,11 @@ def validar_pertinencia_pedagogica(texto, course_id, cmid):
         }
 
     texto_lower = texto.lower()
-
+    #print(texto_lower);
     # 1️⃣ Indicadores prohibidos (nivel incorrecto)
     for palabra in reglas["indicadores_prohibidos"]:
-        if palabra in texto_lower:
+        print(palabra)
+        if palabra in texto_lower:            
             return _mensaje_reconduccion_nivel(reglas["nivel"])
 
     # 2️⃣ Lenguaje propio del nivel

@@ -50,16 +50,16 @@ NIVELES_POR_CURSO = {
         # 🔥 CLAVE: tipo de producto por cmid
         "tipo_producto": {
             194464: {  # U1 S1
-                "nombre": "diagnóstico",
+                "nombre": "diagnóstico al inicio del año escolar",
                 "palabras_clave": [
-                    "diagnóstico"
+                    "diagnóstico al inicio del año escolar"
                 ]
             },
 
             194529: {  # U1 S1 opcional
-                "nombre": "diagnóstico",
+                "nombre": "diagnóstico al inicio del año escolar",
                 "palabras_clave": [
-                    "diagnóstico"
+                    "diagnóstico al inicio del año escolar"
                 ]
             },
 
@@ -85,6 +85,131 @@ NIVELES_POR_CURSO = {
             },
 
             194522: {  # U2 S2 Sesión de aprendizaje
+                "nombre": "unidad didáctica",
+                "palabras_clave": [
+                    "sesión de aprendizaje"              
+                ]
+            }
+        }
+    },
+
+    2443: {  # EDUCACIÓN PRIMARIA
+        "nivel": "Primaria",
+        "edad": "6-11",
+
+        "palabras_clave_validas": [
+            "Primaria","3° grado","4° grado","5° grado","6° grado","educación básica regular", "primeros ciclos", 
+            "aprendizajes fundamentales", "desarrollo integral", "formación básica", 
+            "iniciación académica", "acompañamiento docente", "aprendizaje guiado", 
+            "atención a la diversidad"
+        ],
+ 
+
+        "indicadores_prohibidos": [
+            "inicial","secundaria"
+        ],
+
+        # 🔥 CLAVE: tipo de producto por cmid
+        "tipo_producto": {
+            194770: {  # U1 S1
+                "nombre": "diagnóstico al inicio del año escolar",
+                "palabras_clave": [
+                    "diagnóstico al inicio del año escolar"
+                ]
+            },
+
+            194772: {  # U1 S1 opcional
+                "nombre": "diagnóstico al inicio del año escolar",
+                "palabras_clave": [
+                    "diagnóstico al inicio del año escolar"
+                ]
+            },
+
+            194788: {  # U2 S1
+                "nombre": "planificación anual",
+                "palabras_clave": [
+                    "planificación anual"
+                ]
+            },
+
+            194790: {  # U2 S1 opcional
+                "nombre": "planificación anual",
+                "palabras_clave": [
+                    "planificación anual"
+                ]
+            },
+
+            194799: {  # U2 S2 unidad didáctica
+                "nombre": "unidad didáctica",
+                "palabras_clave": [
+                    "unidad didáctica"              
+                ]
+            },
+
+            194801: {  # U2 S2 Sesión de aprendizaje
+                "nombre": "unidad didáctica",
+                "palabras_clave": [
+                    "sesión de aprendizaje"              
+                ]
+            }
+        }
+    },
+
+    2446: {  # EDUCACIÓN SECUNDARIA
+        "nivel": "Secundaria",
+        "edad": "11-16",
+
+        "palabras_clave_validas": [
+            "Secundaria", "Ciclo VII", "educación física", "vida saludable", "3° de secundaria",
+            "tercer grado de secundaria","4° grado de secundaria","cuarto grado de secundaria",
+            "5° grado de secundaria","quinto grado de secundaria",
+            "autonomía del estudiante", "sedentarismo", "inclusión", "diversidad de habilidades",
+            "uso de TIC", "bienestar socioemocional"
+        ],
+ 
+
+        "indicadores_prohibidos": [
+            "inicial","primaria"            
+        ],
+
+        # 🔥 CLAVE: tipo de producto por cmid
+        "tipo_producto": {
+            194822: {  # U1 S1
+                "nombre": "diagnóstico al inicio del año escolar",
+                "palabras_clave": [
+                    "diagnóstico al inicio del año escolar"
+                ]
+            },
+
+            194824: {  # U1 S1 opcional
+                "nombre": "diagnóstico al inicio del año escolar",
+                "palabras_clave": [
+                    "diagnóstico al inicio del año escolar"
+                ]
+            },
+
+            194840: {  # U2 S1
+                "nombre": "planificación anual",
+                "palabras_clave": [
+                    "planificación anual"
+                ]
+            },
+
+            194842: {  # U2 S1 opcional
+                "nombre": "planificación anual",
+                "palabras_clave": [
+                    "planificación anual"
+                ]
+            },
+
+            194851: {  # U2 S2 unidad didáctica
+                "nombre": "unidad didáctica",
+                "palabras_clave": [
+                    "unidad didáctica"              
+                ]
+            },
+
+            194853: {  # U2 S2 Sesión de aprendizaje
                 "nombre": "unidad didáctica",
                 "palabras_clave": [
                     "sesión de aprendizaje"              
@@ -156,7 +281,7 @@ def validar_pertinencia_pedagogica(texto, course_id, cmid):
         }
 
     texto_lower = texto.lower()
-    #print(texto_lower);
+    print(texto_lower)
     # 1️⃣ Indicadores prohibidos (nivel incorrecto)
     for palabra in reglas["indicadores_prohibidos"]:
         print(palabra)

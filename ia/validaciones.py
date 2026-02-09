@@ -10,16 +10,15 @@ SECUENCIA_ENTREGAS = {
     2440: {  # Inicial 
         194529: 194464,# segunda depende de la primera, 194529 se compara con 194464
         194532: 194473 #“Si estoy en este cmid, ¿con cuál anterior me comparo?”
-    }#,
-
-    #2443: {  # Primaria
-    #    195100: 195080,  # segunda planificación
-    #    195150: 195100
-    #},
-#
-    #2446: {  # Secundaria
-    #    196200: 196180
-    #}
+    },
+    2443: {  # Primaria
+        194772: 194770,  # segunda planificación
+        194790: 194788
+    },
+    2446: {  # Secundaria
+        194824: 194822,
+        194842: 194840
+    }
 }
 
 # =========================
